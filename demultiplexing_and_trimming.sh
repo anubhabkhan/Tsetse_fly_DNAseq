@@ -10,3 +10,13 @@ done
 mkdir porechop_trimmed
 
 porechop_abi -i concatenated.fastq -b porechop_trimmed
+
+#### STEP 3: trimming
+
+cd porechop_trimmed
+
+for file in BC*.fastq
+do
+n=${file%.*fastq}
+porechop_abi -abi -i ${n}.fastq -o ${n}_porechopped.fastq 
+done
