@@ -39,4 +39,10 @@ n=${file%.*fastq}
 minimap2 -a /shared3/Anubhab/Tsetse_flies/ref_dir/genome_subset/merged_ref.fasta ${n}.fastq > ${n}.sam
 done
 
-
+## convert sam to bam
+# minimap fails to add headers to sam in case of a multipart fasta, hence the sam to bam script needs to be modified
+for file in BC*.sam
+do
+n=${file%.*sam}
+samtools view -b -T /shared3/Anubhab/Tsetse_flies/ref_dir/genome_subset/merged_ref.fasta ${n}.sam | samtools sort -o sorted_${n}.bam & 
+done
