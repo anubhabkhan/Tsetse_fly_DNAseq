@@ -46,3 +46,20 @@ do
 n=${file%.*sam}
 samtools view -b -T /shared3/Anubhab/Tsetse_flies/ref_dir/genome_subset/merged_ref.fasta ${n}.sam | samtools sort -o sorted_${n}.bam & 
 done
+
+## index
+for file in sorted_*.bam
+do
+samtools index -b ${file} &
+done
+
+#### STEP 5 : split reads species wise
+for file in sorted_*.bam
+do n=${file%.*bam}
+samtools view -b ${n}.bam Lox_africana* > ${n}_Lox_africana.bam
+samtools view -b ${n}.bam Glo_pallidipes* > ${n}_Glo_pallidipes.bam
+samtools view -b ${n}.bam Syn_caffer* > ${n}_Syn_caffer.bam
+done
+
+
+
