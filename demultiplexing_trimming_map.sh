@@ -54,11 +54,18 @@ samtools index -b ${file} &
 done
 
 #### STEP 5 : split reads species wise
+## create species bed files from merged_references.fasta
+python genome_fasta_to_bed.py merged_ref.fasta merged_ref.bed
+merged_ref.bed | grep -e "Lox_africana" | awk '{print $1"\t"$(NF-1)"\t"$NF}' > merged_ref_Lox_africana.bed
+
+## Split
+
 for file in sorted_*.bam
-do n=${file%.*bam}
-samtools view -b ${n}.bam Lox_africana* > ${n}_Lox_africana.bam
-samtools view -b ${n}.bam Glo_pallidipes* > ${n}_Glo_pallidipes.bam
-samtools view -b ${n}.bam Syn_caffer* > ${n}_Syn_caffer.bam
+do
+n=${file%.*bam}
+samtools view -b ${n}.bam -L merged_ref_Lox_africana.bed > ${n}_Lox_africana.bam &
+samtools view -b ${n}.bam -L merged_ref_Syn_caffer.bed > ${n}_Syn_caffer.bam &
+samtools view -b ${n}.bam -L merged_ref_Glo_pallidipes.bed > ${n}_Glo_pallidipes.bam &
 done
 
 
