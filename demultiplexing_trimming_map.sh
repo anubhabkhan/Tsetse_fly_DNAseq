@@ -68,7 +68,7 @@ samtools view -b ${n}.bam -L merged_ref_Syn_caffer.bed > ${n}_Syn_caffer.bam &
 samtools view -b ${n}.bam -L merged_ref_Glo_pallidipes.bed > ${n}_Glo_pallidipes.bam &
 done
 
-###### STEP 6: merge reads from different run (optional)
+#### STEP 6: merge reads from different run (optional)
 ### to be applied when same library is loaded on different flowcells
 
 for file in {01..06}
@@ -79,7 +79,9 @@ samtools merge merged_${species}_BC${file}.bam lane1_PATH/sorted_BC${file}_porec
 done
 done
 
+#### STEP 7: add read group
 
+gatk AddOrReplaceReadGroups I=merged_Lox_africana_BC02.bam O=RG_merged_L_africana_BC02.bam RGID=BC02 RGLB=BC02 RGPU=BC02 RGPL=Nanopore RGSM=BC02
 
 
 
