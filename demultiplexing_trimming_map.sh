@@ -68,5 +68,19 @@ samtools view -b ${n}.bam -L merged_ref_Syn_caffer.bed > ${n}_Syn_caffer.bam &
 samtools view -b ${n}.bam -L merged_ref_Glo_pallidipes.bed > ${n}_Glo_pallidipes.bam &
 done
 
+###### STEP 6: merge reads from different run (optional)
+### to be applied when same library is loaded on different flowcells
+
+for file in {01..06}
+do
+for species in Lox_africana Syn_caffer Glo_pallidipes
+do
+samtools merge merged_${species}_BC${file}.bam lane1_PATH/sorted_BC${file}_porechopped_${species}.bam lane2_PATH/sorted_BC${file}_${species}.bam lane3_PATH/sorted_BC${file}_${species}.bam lane4_PATH/sorted_BC${file}_${species}.bam
+done
+done
+
+
+
+
 
 
