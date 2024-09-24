@@ -16,8 +16,8 @@ done
 ### convert sam to bam file and sort reads using samtools
 for file in *.sam
 do
-base=basename ${file} .sam
-samtools view -q 30 -u ${base} | samtools sort -o ${base}.bam &
+base=$(basename ${file} .sam)
+samtools view -q 30 -u ${base}.sam | samtools sort -o ${base}.bam &
 done
 
 ### for merging files from mutliple sequencing runs of the same library
