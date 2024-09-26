@@ -31,3 +31,10 @@ for file in *_merged.bam
 do
 samtools markdup ${file} MD_${file} &
 done
+
+### estimate mapping stats
+
+for file in MD_*.bam
+do
+qualimap bamqc -bam ${file}
+done
