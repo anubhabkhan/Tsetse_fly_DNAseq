@@ -21,5 +21,8 @@ samtools view -q 30 -u ${base}.sam | samtools sort -o ${base}.bam &
 done
 
 ### for merging files from mutliple sequencing runs of the same library
-samtools merge output_merged.bam input_run1_sorted.bam input_run2_sorted.bam
+for species in Bos_taurus Can_lupus_familiaris Cap_hircus Cro_crocutta Gir_camelopardalis Glo_pallidipes Hom_sapiens Hya_hyaena Lox_africana Pha_africanus Syn_caffer
+do 
+samtools merge Tsetse_P4_${species}_merged.bam Tsetse_P4_L1_${species}.bam Tsetse_P4_L4_${species}.bam & 
+done
 
