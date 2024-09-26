@@ -13,7 +13,7 @@ do
 minimap2 -a ${species}.fna pool1_${species}.fq > pool1_${species}.sam
 done
 
-### convert sam to bam file and sort reads using samtools
+### convert sam to bam file and sort reads using samtools v1.9
 for file in *.sam
 do
 base=$(basename ${file} .sam)
@@ -26,3 +26,8 @@ do
 samtools merge Tsetse_P4_${species}_merged.bam Tsetse_P4_L1_${species}.bam Tsetse_P4_L4_${species}.bam & 
 done
 
+### markduplicates
+for file in *_merged.bam
+do
+samtools markdup ${file} MD_${file} &
+done
